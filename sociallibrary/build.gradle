@@ -1,8 +1,36 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
-
+version = '1.0'
+group = 'com.github.sukhwinder-kaur'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
+        repositories {
+            maven {
+                url = mavenLocal().url
+            }
+        }
+    }
+}
+/*publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${buildDir}/publishing-repository")
+        }
+    }
+}*/
 android {
     namespace 'com.dikonia.sociallibrary'
     compileSdk 32
@@ -37,3 +65,18 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+/*
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.sukhwinder-kaur'
+            artifactId = 'testsocial-lib'
+            version = "1.0"
+            from(components["java"])
+
+            pom {
+                description = 'A description of my library'
+            }
+        }
+    }
+}*/
